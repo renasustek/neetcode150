@@ -8,41 +8,40 @@ import java.util.List;
 
 public class EncodeAndDecodeStrings {
 
+
+    // A simpler, more robust encoding format
     public String encode(List<String> strs) {
         StringBuilder sb = new StringBuilder();
-        for (String str : strs) {
-            sb.append(":"+str.length()+":"+str);
+        for (String s : strs) {
+            sb.append(s.length()).append('#').append(s);
         }
         return sb.toString();
     }
 
-    public List<String> decode(String str) {
+    // A parser-based decode method that handles any length
+    public List<String> decode(String s) {
         List<String> result = new ArrayList<>();
+        int i = 0; // i is our main pointer, moving through the encoded string
 
-        HashMap<Character, Integer> numMap = new HashMap<>();
-        numMap.put('0', 0);
-        numMap.put('1', 1);
-        numMap.put('2', 2);
-        numMap.put('3', 3);
-        numMap.put('4', 4);
-        numMap.put('5', 5);
-        numMap.put('6', 6);
-        numMap.put('7', 7);
-        numMap.put('8', 8);
-        numMap.put('9', 9);
-
-        char[] strToChar = str.toCharArray();
-        for (int i = 0; i < strToChar.length; i++) {
-            if (strToChar[i] == ':' && numMap.containsKey(strToChar[i+1]) && strToChar[i + 2] == ':') {
-                int endCheck = i+numMap.get(strToChar[i+1])+2;
-                StringBuilder sb = new StringBuilder();
-                for (int j = i+3; j <= endCheck; j++) {
-                    sb.append(strToChar[j]);
-                }
-                result.add(sb.toString());
-                i=endCheck;
+        while (i < s.length()) {
+            // j will find the position of the '#' delimiter
+            int j = i;
+            while (j < s.length() && s.charAt(j) != '#') {
+                j++;
             }
+
+            // Now, the characters between i and j form the length string (e.g., "4" or "11")
+            String lengthStr = s.substring(i, j);
+            int length = Integer.parseInt(lengthStr);
+
+            // The actual string starts right after the '#' and has the specified length
+            String actualStr = s.substring(j + 1, j + 1 + length);
+            result.add(actualStr);
+
+            // Move our main pointer i past the string we just decoded to the start of the next length
+            i = j + 1 + length;
         }
+
         return result;
     }
 }
