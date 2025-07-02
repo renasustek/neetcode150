@@ -35,11 +35,9 @@ public class EncodeAndDecodeStrings {
             int length = Integer.parseInt(lengthStr);
 
             // The actual string starts right after the '#' and has the specified length
-            String actualStr = s.substring(j + 1, j + 1 + length);
-            result.add(actualStr);
-
-            // Move our main pointer i past the string we just decoded to the start of the next length
             i = j + 1 + length;
+            String actualStr = s.substring(j + 1, i);
+            result.add(actualStr);
         }
 
         return result;
