@@ -1,4 +1,4 @@
-package org.example.ArraysAndHashing;
+package org.example.twoPointers;
 
 public class ValidPalindrome {
     public boolean isPalindrome(String s) {

@@ -1,4 +1,4 @@
-package org.example.twoSum;
+package org.example.twoPointers;
 
 public class TwoIntegerSumII {
     public int[] twoSum(int[] numbers, int target) {
