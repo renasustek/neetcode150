@@ -21,7 +21,7 @@ public class ValidParentheses {
                 return false;
             }
             if (map.containsKey(s.charAt(i))){
-                if (stack.peek() == map.get(s.charAt(i))){
+                if (stack.peek() ==     map.get(s.charAt(i))){
                     stack.pop();
                 }else {
                     return false;
